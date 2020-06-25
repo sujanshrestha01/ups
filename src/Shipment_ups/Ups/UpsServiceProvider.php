@@ -1,4 +1,4 @@
-<?php namespace Beaudierman\Ups;
+<?php namespace Shipment_ups\Ups;
 
 use Illuminate\Support\ServiceProvider;
 

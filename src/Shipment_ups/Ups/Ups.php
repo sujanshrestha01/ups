@@ -1,35 +1,35 @@
-<?php namespace Beaudierman\Ups;
+<?php namespace Shipment_ups\Ups;
 
 class Ups {
 
-	
+
 	private $xml;
 	protected $xml_result;
-	
+
 	/**
 	 * @var access_key string
 	 * The access key from your UPS account
 	 **/
 	private $access_key;
-	
+
 	/**
 	 * @var username string
 	 * The username you log in to ups.com with
 	 **/
 	private $username;
-	
+
 	/**
 	 * @var password string
 	 * The password for the above username
 	 **/
 	private $password;
-	
+
 	/**
 	 * @var account_number string
 	 * Your UPS account number(numbers only, no special characters such as dashes)
 	 **/
 	private $account_number;
-	
+
 	/**
 	 * @var negotiated_rates boolean
 	 * Negotiated rates flag - Some UPS accounts have special negotiated rates enabled
@@ -50,10 +50,10 @@ class Ups {
 
 	/**
 	 * Load UPS.com credentials from the config file
-	 * located at beaudierman/ups/src/config/config.php
+	 * located at Shipment_ups/ups/src/config/config.php
 	 *
 	 * @param credentials array
-	 * 
+	 *
 	 * @return void
 	 **/
 	public function loadCredentials($credentials)
@@ -88,47 +88,47 @@ class Ups {
 
 		$this->xml = '<?xml version="1.0"?>
 		<AccessRequest xml:lang="en-US">
-			<AccessLicenseNumber>' . $this->access_key . '</AccessLicenseNumber>
-			<UserId>' . $this->username . '</UserId>
-			<Password>' . $this->password . '</Password>
+		<AccessLicenseNumber>' . $this->access_key . '</AccessLicenseNumber>
+		<UserId>' . $this->username . '</UserId>
+		<Password>' . $this->password . '</Password>
 		</AccessRequest>
 		<?xml version="1.0"?>
 		<RatingServiceSelectionRequest xml:lang="en-US">
-			<Request>
-				<TransactionReference>
-					<CustomerContext>Rate Request</CustomerContext>
-					<XpciVersion>1.0001</XpciVersion>
-				</TransactionReference>
-				<RequestAction>Rate</RequestAction>
-				<RequestOption>' . $options['request_option'] . '</RequestOption>
-			</Request>
-			<PickupType>
-				<Code>01</Code>
-			</PickupType>
-			<Shipment>
-				<Shipper>
-					<ShipperNumber>' . $this->account_number . '</ShipperNumber>
-					<Address>
-						<PostalCode>' . $options['from_zip'] . '</PostalCode>
-						<StateProvinceCode>' . $options['from_state'] . '</StateProvinceCode>
-						<CountryCode>' . $options['from_country'] . '</CountryCode>
-					</Address>
-				</Shipper>
-				<ShipTo>
-					<Address>
-						<PostalCode>' . $options['to_zip'] . '</PostalCode>
-						<StateProvinceCode>' . $options['to_state'] . '</StateProvinceCode>
-						<CountryCode>' . $options['to_country'] . '</CountryCode>
-						' . $residential_flag .'
-					</Address>
-				</ShipTo>
-				<Service>
-					<Code>' . $options['service_type'] . '</Code>
-					<Description>Package</Description>
-				</Service>
-				<ShipmentServiceOptions/>
-				' . $this->buildPackages($options['packages'], $options['weight'], $options['measurement']) . $negotiated_flag . '
-			</Shipment>
+		<Request>
+		<TransactionReference>
+		<CustomerContext>Rate Request</CustomerContext>
+		<XpciVersion>1.0001</XpciVersion>
+		</TransactionReference>
+		<RequestAction>Rate</RequestAction>
+		<RequestOption>' . $options['request_option'] . '</RequestOption>
+		</Request>
+		<PickupType>
+		<Code>01</Code>
+		</PickupType>
+		<Shipment>
+		<Shipper>
+		<ShipperNumber>' . $this->account_number . '</ShipperNumber>
+		<Address>
+		<PostalCode>' . $options['from_zip'] . '</PostalCode>
+		<StateProvinceCode>' . $options['from_state'] . '</StateProvinceCode>
+		<CountryCode>' . $options['from_country'] . '</CountryCode>
+		</Address>
+		</Shipper>
+		<ShipTo>
+		<Address>
+		<PostalCode>' . $options['to_zip'] . '</PostalCode>
+		<StateProvinceCode>' . $options['to_state'] . '</StateProvinceCode>
+		<CountryCode>' . $options['to_country'] . '</CountryCode>
+		' . $residential_flag .'
+		</Address>
+		</ShipTo>
+		<Service>
+		<Code>' . $options['service_type'] . '</Code>
+		<Description>Package</Description>
+		</Service>
+		<ShipmentServiceOptions/>
+		' . $this->buildPackages($options['packages'], $options['weight'], $options['measurement']) . $negotiated_flag . '
+		</Shipment>
 		</RatingServiceSelectionRequest>';
 
 		return $this->send();
@@ -153,30 +153,30 @@ class Ups {
 			for($i = 0; $i < $number; $i++)
 			{
 				$packages[] = '<Package>
-					<PackagingType>
-						<Code>02</Code>
-					</PackagingType>
-					<PackageWeight>
-						<UnitOfMeasurement>
-							<Code>' . $measurement . '</Code>
-						</UnitOfMeasurement>
-						<Weight>' . $individual_weight . '</Weight>
-					</PackageWeight>
+				<PackagingType>
+				<Code>02</Code>
+				</PackagingType>
+				<PackageWeight>
+				<UnitOfMeasurement>
+				<Code>' . $measurement . '</Code>
+				</UnitOfMeasurement>
+				<Weight>' . $individual_weight . '</Weight>
+				</PackageWeight>
 				</Package>';
 			}
 		}
 		else
 		{
 			$packages[] = '<Package>
-				<PackagingType>
-					<Code>02</Code>
-				</PackagingType>
-				<PackageWeight>
-					<UnitOfMeasurement>
-						<Code>' . $measurement . '</Code>
-					</UnitOfMeasurement>
-					<Weight>' . $weight . '</Weight>
-				</PackageWeight>
+			<PackagingType>
+			<Code>02</Code>
+			</PackagingType>
+			<PackageWeight>
+			<UnitOfMeasurement>
+			<Code>' . $measurement . '</Code>
+			</UnitOfMeasurement>
+			<Weight>' . $weight . '</Weight>
+			</PackageWeight>
 			</Package>';
 		}
 
@@ -276,44 +276,44 @@ class Ups {
 		switch($service_code)
 		{
 			case '01':
-				return 'UPS Next Day Air';
-				break;
+			return 'UPS Next Day Air';
+			break;
 			case '02':
-				return 'UPS 2nd Day Air';
-				break;
+			return 'UPS 2nd Day Air';
+			break;
 			case '03':
-				return 'UPS Ground';
-				break;
+			return 'UPS Ground';
+			break;
 			case '07':
-				return 'UPS Worldwide Express';
-				break;
+			return 'UPS Worldwide Express';
+			break;
 			case '08':
-				return 'UPS Worldwide Expedited';
-				break;
+			return 'UPS Worldwide Expedited';
+			break;
 			case '11':
-				return 'UPS Standard';
-				break;
+			return 'UPS Standard';
+			break;
 			case '12':
-				return 'UPS 3 Day Select';
-				break;
+			return 'UPS 3 Day Select';
+			break;
 			case '13':
-				return 'Next Day Air Saver';
-				break;
+			return 'Next Day Air Saver';
+			break;
 			case '14':
-				return 'UPS Next Day Air Early AM';
-				break;
+			return 'UPS Next Day Air Early AM';
+			break;
 			case '54':
-				return 'UPS Worldwide Express Plus';
-				break;
+			return 'UPS Worldwide Express Plus';
+			break;
 			case '59':
-				return 'UPS Second Day Air AM';
-				break;
+			return 'UPS Second Day Air AM';
+			break;
 			case '65':
-				return 'UPS Saver';
-				break;
+			return 'UPS Saver';
+			break;
 			default:
-				return false;
-				break;
+			return false;
+			break;
 		}
 	}
 
@@ -356,7 +356,7 @@ class Ups {
 		$this->commercial_rates = (isset($options['commercial']) && $options['commercial']) ? true : false;
 
 		$this->negotiated_rates = (isset($options['negotiated_rates']) && $options['negotiated_rates']) ? true : false;
-			
+
 		return $options;
 	}
 }

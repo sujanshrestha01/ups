@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Beaudierman\\Ups\\": "src/"
+            "Shipment_ups\\Ups\\": "src/"
         }
     },
     "minimum-stability": "dev"

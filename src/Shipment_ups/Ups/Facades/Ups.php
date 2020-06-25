@@ -1,4 +1,4 @@
-<?php namespace Beaudierman\Ups\Facades;
+<?php namespace Shipment_ups\Ups\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -15,11 +15,11 @@ composer update
 ```
 Add a new Service Provider to the ```providers``` array in your ```app/config/app.php``` file:
 ```
-'Beaudierman\Ups\UpsServiceProvider'
+'Shipment_ups\Ups\UpsServiceProvider'
 ```
 Add a class alias in the same configuration file to the ```aliases``` array:
 ```
-'Ups'             => 'Beaudierman\Ups\Facades\Ups'
+'Ups'             => 'Shipment_ups\Ups\Facades\Ups'
 ```
 Example:
 ```
